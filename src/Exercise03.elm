@@ -18,7 +18,7 @@ import Json.Decode exposing (Decoder, fail)
 
 decoder : Decoder (List String)
 decoder =
-    fail "This is escalating quickly!"
+    (Json.Decode.list (Json.Decode.map String.toUpper Json.Decode.string))
 
 
 

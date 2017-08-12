@@ -18,7 +18,7 @@ import Json.Decode exposing (Decoder, fail)
 
 decoder : Decoder String
 decoder =
-    fail "I'd rather succeed, really."
+    Json.Decode.succeed "sure."
 
 
 

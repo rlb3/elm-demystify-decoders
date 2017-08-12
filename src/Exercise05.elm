@@ -28,7 +28,10 @@ import Json.Decode exposing (fail, Decoder)
 
 decoder : Decoder String
 decoder =
-    fail "Implement me!"
+    (Json.Decode.field "repeat" Json.Decode.int)
+        |> Json.Decode.andThen (\repeat -> (Json.Decode.map (\term -> String.repeat repeat term)
+                                                (Json.Decode.field "term" Json.Decode.string)))
+
 
 
 

@@ -26,11 +26,14 @@ import Json.Decode exposing (Decoder, fail)
    a hint, it involves working with a list of possible decoders.
 -}
 
-
 decoder : Decoder (List Int)
 decoder =
-    fail "Implement me!"
-
+    -- fail "Implement me!"
+    Json.Decode.oneOf
+        [ Json.Decode.list Json.Decode.int
+        , Json.Decode.map List.singleton Json.Decode.int
+        ]
+        |> Json.Decode.field "number"
 
 
 {- Once you think you're done, run the tests for this exercise from the root of

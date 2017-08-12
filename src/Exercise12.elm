@@ -1,7 +1,18 @@
 module Exercise12 exposing (Tree(..), decoder)
 
-import Json.Decode exposing (Decoder, fail)
 
+import Json.Decode
+    exposing
+        ( Decoder
+        , fail
+        , map2
+        , lazy
+        , oneOf
+        , string
+        , int
+        , list
+        , field
+        )
 
 {- There's one more interesting use case we've completely skipped so far.
    Handling recursive data. So let's set the record straight.
@@ -40,10 +51,27 @@ type
       -- Or we're at a leaf, and we just have a name and a value
     | Leaf String Int
 
-
 decoder : Decoder Tree
 decoder =
-    fail "I'm not a tree."
+    --fail "I'm not a tree."
+    oneOf
+        [ lazy (\_ -> branchDecoder)
+        , leafDecoder
+        ]
+
+
+branchDecoder : Decoder Tree
+branchDecoder =
+    map2 Branch
+        (field "name" string)
+        (field "children" (list <| lazy (\_ -> decoder)))
+
+
+leafDecoder : Decoder Tree
+leafDecoder =
+    map2 Leaf
+        (field "name" string)
+        (field "value" int)
 
 
 

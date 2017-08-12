@@ -2,7 +2,6 @@ module Exercise08 exposing (decoder, Color(..))
 
 import Json.Decode exposing (Decoder, fail, succeed)
 
-
 {- You've already seen that a decoder can completely ignore whatever is going on
    in the javascript value. This opens possibilities, for example we can make a
    decoder that simple takes a `String` and decodes this into a union type, or
@@ -29,7 +28,18 @@ type Color
 
 decoder : String -> Decoder Color
 decoder colorString =
-    fail <| "I don't know a color named " ++ colorString
+    case colorString of
+        "green" ->
+            succeed Green
+
+        "blue" ->
+            succeed Blue
+
+        "red" ->
+            succeed Red
+
+        _ ->
+            fail <| "I don't know a color named " ++ colorString
 
 
 
